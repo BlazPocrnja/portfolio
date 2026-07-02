@@ -1,6 +1,5 @@
 ---
 import Header from '@/components/common/Header.astro';
-import Footer from '@hdud/common/components/Footer.astro'
 import BaseLayout from './BaseLayout.astro';
 import { slide } from "astro:transitions";
 import { getI18n } from "@/i18n/index"
@@ -16,6 +15,5 @@ const links = getMenus(i18n('menus'), currentLocale);
 	<div class="p-2 sm:p-4 xl:p-8 relative min-h-1/2 mx-auto flex flex-col" transition:animate={slide({ duration: "0.4s" })}>
 		<slot />
 	</div>
-  <Footer shows={i18n('footer')} links={links}/>
 </BaseLayout>
 

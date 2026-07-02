@@ -1,8 +1,8 @@
 import type { APIRoute } from 'astro';
-import getRobotTxt from '@hdud/common/libs/robot';
-
-const robotTxt = await getRobotTxt()
 
 export const GET: APIRoute = ({ site }) => {
-    return new Response(robotTxt(site));
+    const robotTxt = `User-agent: *
+Allow: /
+Sitemap: ${new URL('sitemap-index.xml', site).href}`;
+    return new Response(robotTxt);
 };

@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import Screen from '@hdud/common/pages/screen.astro'
 import { getI18n } from "@/i18n/index"
 import { getRelativeLocaleUrl } from 'astro:i18n';
 import { siteConfig } from '@/site.config';
@@ -18,6 +17,9 @@ const mates = {
 ---
 
 <BaseLayout {...mates}>
-  <Screen />
+  <div class="p-4">
+    <h1 class="text-2xl mb-4">Screen Tool</h1>
+    <p>This feature is being customized with GSAP animations.</p>
+  </div>
 </BaseLayout>
 

@@ -43,13 +43,14 @@ export default defineConfig({
         emitFile: true,
         filename: "package_alalyze.html",
       }),
-      rawFonts([".ttf", ".woff"]),
     ],
     build: {
       rollupOptions: {
         output: {
-          manualChunks: {
-            vendor: ['react', 'react-dom'],
+          manualChunks: (id) => {
+            if (id.includes('react') || id.includes('react-dom')) {
+              return 'vendor';
+            }
           },
         },
       },
@@ -104,33 +105,4 @@ export default defineConfig({
     "/blog/tags": "/blog/tags/Python",
     "/blog/posts": "/blog/posts/1"
   },
-  markdown: {
-    // 阅读时间
-    remarkPlugins: [remarkReadingTime],
-    rehypePlugins: [
-      [
-        // 链接添加图标
-        rehypeExternalLinks,
-        {
-          content: { type: 'text', value: ' 🔗' }
-        }
-      ],
-    ]
-  },
 });
-
-function rawFonts(ext) {
-    return {
-        name: "vite-plugin-raw-fonts",
-        // @ts-expect-error:next-line
-        transform(_, id) {
-            if (ext.some((e) => id.endsWith(e))) {
-                const buffer = fs.readFileSync(id);
-                return {
-                    code: `export default ${JSON.stringify(buffer)}`,
-                    map: null,
-                };
-            }
-        },
-    };
-}

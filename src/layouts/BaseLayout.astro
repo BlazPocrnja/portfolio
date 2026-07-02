@@ -1,7 +1,16 @@
 ---
-import Layout from '@hdud/common/layouts/BaseLayout.astro';
 import '@/styles/global.css'
+import CustomCursor from '@/components/common/CustomCursor.astro'
 ---
-<Layout {...Astro.props}>
-  <slot />
-</Layout>
+<!DOCTYPE html>
+<html lang={Astro.currentLocale || 'zh'}>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{Astro.props.title || 'Portfolio'}</title>
+  </head>
+  <body>
+    <CustomCursor />
+    <slot />
+  </body>
+</html>

@@ -1,0 +1,179 @@
+---
+// You can import this into your main layout or index page.
+// Usage: <Footer />
+---
+
+<footer class="exhibition-footer">
+  <div class="footer-container">
+    
+    <div class="footer-info">
+      <h2 class="reveal-text">AHIS 325</h2>
+      <p class="reveal-text subtitle">Exhibition & Group Project</p>
+      
+      <div class="member-list reveal-text">
+        <p>Curated by:</p>
+        <ul>
+          <li>Member Name 1</li>
+          <li>Member Name 2</li>
+          <li>Member Name 3</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="ascii-wrapper reveal-text">
+      <pre class="ascii-art" aria-hidden="true">
+           _.-._
+         | | | |_
+         | | | | |
+         | | | | |
+       _ |  '-._ |
+       \`\`\`;-,.    |
+        \    '   /
+         \  '   /
+          \|   |
+      </pre>
+    </div>
+
+  </div>
+</footer>
+
+<style>
+  .exhibition-footer {
+    position: relative;
+    width: 100%;
+    min-height: 60vh;
+    background-color: #050505; /* Matching a dark theme vibe */
+    color: rgba(255, 255, 255, 0.5);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.15); /* Borrowed from your index.css */
+  }
+
+  .footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+    z-index: 2;
+  }
+
+  .footer-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    font-family: 'Inter', sans-serif;
+  }
+
+  /* Referencing the fonts from your index.css */
+  .footer-info h2 {
+    font-family: 'Zirena', sans-serif; 
+    font-size: clamp(3rem, 6vw, 6rem);
+    color: #ffffff;
+    line-height: 1;
+    margin: 0;
+  }
+
+  .subtitle {
+    font-family: 'Breton', sans-serif;
+    font-size: clamp(1rem, 2vw, 1.5rem);
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .member-list {
+    margin-top: 2rem;
+  }
+
+  .member-list ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 0.5rem;
+  }
+
+  .member-list li {
+    font-size: 1.1rem;
+    padding-bottom: 0.5rem;
+    color: rgba(255, 255, 255, 0.6);
+    transition: color 0.3s ease;
+  }
+
+  .member-list li:hover {
+    color: #ffffff;
+  }
+
+  .ascii-wrapper {
+    position: relative;
+    /* Ensure mouse events pass through the ASCII art so it doesn't block underlying links/cursors */
+    pointer-events: none; 
+  }
+
+  .ascii-art {
+    font-family: monospace;
+    font-size: 12px; /* Adjust scale of the hand */
+    line-height: 1.2;
+    color: rgba(255, 255, 255, 0.9);
+    white-space: pre;
+    /* Adding a subtle glow */
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.2); 
+    will-change: transform;
+  }
+
+  @media (max-width: 768px) {
+    .footer-container {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4rem;
+    }
+    .ascii-wrapper {
+      align-self: center;
+    }
+  }
+</style>
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  // Register ScrollTrigger to avoid errors
+  gsap.registerPlugin(ScrollTrigger);
+
+  // 1. Scroll Reveal Animation for Text & Art
+  const revealElements = document.querySelectorAll('.reveal-text');
+  
+  revealElements.forEach((el) => {
+    gsap.from(el, {
+      scrollTrigger: {
+        trigger: el,
+        start: "top 90%", // Triggers when the top of the element hits 90% of the viewport height
+        toggleActions: "play none none reverse"
+      },
+      y: 40,
+      opacity: 0,
+      duration: 1.2,
+      ease: "power3.out",
+      stagger: 0.2
+    });
+  });
+
+  // 2. Mouse Movement Parallax for the ASCII Art
+  const asciiArt = document.querySelector('.ascii-art');
+  
+  if (asciiArt && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    // quickTo is highly optimized for events that fire constantly like mousemove
+    const xTo = gsap.quickTo(asciiArt, "x", { duration: 0.8, ease: "power3.out" });
+    const yTo = gsap.quickTo(asciiArt, "y", { duration: 0.8, ease: "power3.out" });
+
+    window.addEventListener('mousemove', (e) => {
+      // Calculate normalized mouse coordinates (-0.5 to 0.5)
+      const xNorm = (e.clientX / window.innerWidth) - 0.5;
+      const yNorm = (e.clientY / window.innerHeight) - 0.5;
+      
+      // Multiply by maximum pixel translation distances
+      xTo(xNorm * 60); 
+      yTo(yNorm * 60); 
+    }, { passive: true }); // passive true matches your index.js optimization
+  }
+</script>

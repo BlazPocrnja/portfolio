@@ -1,0 +1,39 @@
+---
+import Footer from "../common/Footer";
+import "../../styles/footer.css";
+---
+ 
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Footer demo</title>
+  </head>
+  <body>
+    <!-- Stand-in for your real page content — just here so there's
+         something to scroll through before the footer reveals. Delete
+         this section once Footer.tsx is dropped into your real layout. -->
+    <main class="demo-hero">
+      <p>Scroll down ↓</p>
+    </main>
+ 
+    <Footer client:load />
+  </body>
+</html>
+ 
+<style is:global>
+  body {
+    margin: 0;
+    background: #0a0a0b;
+    color: #f3f1ec;
+  }
+  .demo-hero {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: -apple-system, "Helvetica Neue", Arial, sans-serif;
+    font-size: 1.2rem;
+    opacity: 0.6;
+  }
+</style>
